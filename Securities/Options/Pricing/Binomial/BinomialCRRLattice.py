@@ -1,14 +1,14 @@
-""" Price an option by the trinomial lattice """
+""" Price an option by the binomial CRR lattice """
 import numpy as np
 
-from trading.Classes.Options.Pricing.Trinomial import TrinomialTreeOption
+import BinomialCRROption
 
 
-class TrinomialLattice(TrinomialTreeOption):
+class BinomialCRRLattice(BinomialCRROption.BinomialCRROption):
 
     def _setup_parameters_(self):
-        super(TrinomialLattice, self)._setup_parameters_()
-        self.M = 2*self.N+1
+        super(BinomialCRRLattice, self)._setup_parameters_()
+        self.M = 2*self.N + 1
 
     def _initialize_stock_price_tree_(self):
         self.STs = np.zeros(self.M)
@@ -18,15 +18,17 @@ class TrinomialLattice(TrinomialTreeOption):
             self.STs[i] = self.STs[i-1]*self.d
 
     def _initialize_payoffs_tree_(self):
+        odd_nodes = self.STs[::2]
         return np.maximum(
-            0, (self.STs-self.K) if self.is_call
-            else(self.K-self.STs))
+            0, (odd_nodes - self.K) if self.is_call
+            else(self.K - odd_nodes))
 
     def __check_early_exercise__(self, payoffs, node):
         self.STs = self.STs[1:-1]  # Shorten the ends of the list
+        odd_STs = self.STs[::2]
         early_ex_payoffs = \
-            (self.STs-self.K) if self.is_call \
-            else(self.K-self.STs)
+            (odd_STs-self.K) if self.is_call \
+            else (self.K-odd_STs)
         payoffs = np.maximum(payoffs, early_ex_payoffs)
 
         return payoffs

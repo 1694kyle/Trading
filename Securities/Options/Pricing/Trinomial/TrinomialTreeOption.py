@@ -3,10 +3,10 @@ import math
 
 import numpy as np
 
-from trading.Classes.Options.Pricing.Binomial import BinomialTreeOption
+from trading.Securities.Options.Pricing.Binomial import BinomialTreeOption
 
 
-class TrinomialTreeOption(BinomialTreeOption):
+class TrinomialTreeOption(BinomialTreeOption.BinomialTreeOption):
 
     def _setup_parameters_(self):
         """ Required calculations for the model """

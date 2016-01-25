@@ -1,10 +1,10 @@
 """ Price an option by the binomial CRR model """
 import math
 
-from BinomialTreeOption import BinomialTreeOption
+import BinomialTreeOption
 
 
-class BinomialCRROption(BinomialTreeOption):
+class BinomialCRROption(BinomialTreeOption.BinomialTreeOption):
 
     def _setup_parameters_(self):
         self.u = math.exp(self.sigma * math.sqrt(self.dt))

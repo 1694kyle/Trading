@@ -1,10 +1,10 @@
 """ Price an option by the Leisen-Reimer tree """
 import math
 
-from BinomialTreeOption import BinomialTreeOption
+import BinomialTreeOption
 
 
-class BinomialLROption(BinomialTreeOption):
+class BinomialLROption(BinomialTreeOption.BinomialTreeOption):
 
     def _setup_parameters_(self):
         odd_N = self.N if (self.N%2 == 1) else (self.N+1)

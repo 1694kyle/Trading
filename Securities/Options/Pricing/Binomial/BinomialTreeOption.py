@@ -5,10 +5,10 @@ import math
 
 import numpy as np
 
-from trading.Classes.Options.StockOption import StockOption
+from trading.Securities.Options import StockOption
 
 
-class BinomialTreeOption(StockOption):
+class BinomialTreeOption(StockOption.StockOption):
 
     def _setup_parameters_(self):
         self.u = 1 + self.pu  # Expected value in the up state

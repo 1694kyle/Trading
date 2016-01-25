@@ -2,8 +2,8 @@
 Get implied volatilities from a Leisen-Reimer binomial
 tree using the bisection method as the numerical procedure.
 """
-from trading.NonLinear.bisection import bisection
-from trading.Classes.Options.Pricing.Binomial.BinomialLROption import BinomialLROption
+from trading.NonLinear import bisection
+from trading.Securities.Options.Pricing.Binomial import BinomialLROption
 
 class ImpliedVolatilityModel(object):
 
@@ -18,7 +18,7 @@ class ImpliedVolatilityModel(object):
 
     def _option_valuation_(self, K, sigma):
         # Use the binomial Leisen-Reimer tree
-        lr_option = BinomialLROption(
+        lr_option = BinomialLROption.BinomialLROption(
             self.S0, K, self.r,  self.T, self.N,
             {"sigma": sigma,
              "is_call": self.is_call,
@@ -32,6 +32,6 @@ class ImpliedVolatilityModel(object):
             f = lambda sigma: \
                 self._option_valuation_(
                     Ks[i], sigma) - opt_prices[i]
-            impv = bisection(f, 0.01, 0.99, 0.0001, 100)[0]
+            impv = bisection.bisection(f, 0.01, 0.99, 0.0001, 100)[0]
             impvols.append(impv)
         return impvols

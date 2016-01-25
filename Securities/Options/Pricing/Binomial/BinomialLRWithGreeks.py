@@ -1,10 +1,10 @@
 """ Compute option price, delta and gamma by the LR tree """
 import numpy as np
 
-from BinomialLROption import BinomialLROption
+import BinomialLROption
 
 
-class BinomialLRWithGreeks(BinomialLROption):
+class BinomialLRWithGreeks(BinomialLROption.BinomialLROption):
 
     def __new_stock_price_tree__(self):
         """
